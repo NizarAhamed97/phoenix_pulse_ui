@@ -1,27 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = 'http://localhost:3000/api'; // Replace with your backend base URL
+const API_BASE_URL = "http://localhost:3000"; // Change if backend is deployed
 
-// Get all members
+// API for Members
 export const fetchMembers = async () => {
-  const response = await axios.get(`${BASE_URL}/members`);
-  return response.data;
+  return await axios.get(`${API_BASE_URL}/members`);
 };
 
-// Add a new member
 export const addMember = async (memberData) => {
-  const response = await axios.post(`${BASE_URL}/members`, memberData);
-  return response.data;
+  return await axios.post(`${API_BASE_URL}/members`, memberData);
 };
 
-// Get all staff
-export const fetchStaffs = async () => {
-  const response = await axios.get(`${BASE_URL}/staff`);
-  return response.data;
+// API for Staff
+export const fetchStaff = async () => {
+  return await axios.get(`${API_BASE_URL}/staff`);
 };
 
-// Add a new staff
 export const addStaff = async (staffData) => {
-  const response = await axios.post(`${BASE_URL}/staff`, staffData);
-  return response.data;
+  return await axios.post(`${API_BASE_URL}/staff`, staffData);
 };
