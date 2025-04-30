@@ -10,7 +10,7 @@ const StaffAttendance = () => {
   const handleCheckIn = async () => {
     if (!staffID) return;
     try {
-      await axios.post("http://localhost:3000/attendance/staff/checkin", { StaffID: staffID });
+      await axios.post("http://localhost:5000/attendance/staff/checkin", { StaffID: staffID });
       setStaffID("");
       fetchAttendance();
     } catch (error) {
@@ -20,8 +20,8 @@ const StaffAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
-      const presentRes = await axios.get("http://localhost:3000/attendance/staff/present");
-      const absentRes = await axios.get("http://localhost:3000/attendance/staff/absent");
+      const presentRes = await axios.get("http://localhost:5000/attendance/staff/present");
+      const absentRes = await axios.get("http://localhost:5000/attendance/staff/absent");
 
       setPresentStaff({
         inGym: presentRes.data.filter((s) => s.CheckOutTime === null),
