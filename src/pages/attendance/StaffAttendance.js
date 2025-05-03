@@ -20,8 +20,8 @@ const StaffAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
-      const presentRes = await axios.get("http://localhost:5000/attendance/staff/present");
-      const absentRes = await axios.get("http://localhost:5000/attendance/staff/absent");
+      const presentRes = await axios.get("/api/attendance/staff/present");
+      const absentRes = await axios.get("/api/attendance/staff/absent");
 
       setPresentStaff({
         inGym: presentRes.data.filter((s) => s.CheckOutTime === null),

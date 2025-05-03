@@ -10,7 +10,7 @@ const MemberAttendance = () => {
   const handleCheckIn = async () => {
     if (!memberID) return;
     try {
-      await axios.post("http://localhost:5000/api/attendance/members/checkin", { FK_MemberID: memberID });
+      await axios.post("/api/attendance/members/checkin", { FK_MemberID: memberID });
       setMemberID("");
       fetchAttendance();
     } catch (error) {
@@ -20,9 +20,9 @@ const MemberAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
-      const presentRes = await axios.get("http://localhost:5000/api/attendance/members/present");
+      const presentRes = await axios.get("/api/attendance/members/present");
       console.log(presentRes)
-      const absentRes = await axios.get("http://localhost:5000/api/attendance/members/absent");
+      const absentRes = await axios.get("/api/attendance/members/absent");
 
       setPresentMembers({
         inGym: presentRes.data.filter((m) => m.CheckOut === null),

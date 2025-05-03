@@ -5,7 +5,7 @@ const AllMembers = () => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/members") // Adjust API URL as needed
+    fetch("/api/members") // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => setMembers(data))
       .catch((error) => console.error("Error fetching members:", error));

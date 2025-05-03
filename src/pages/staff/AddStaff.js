@@ -16,7 +16,7 @@ const AddStaff = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/staffs", {
+    fetch("/api/staffs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
