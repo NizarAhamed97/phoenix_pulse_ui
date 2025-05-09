@@ -13,7 +13,7 @@ const MemberLogin = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/attendance/members/checkin", {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/attendance/members/checkin`, {
         FK_MemberID: input
       });
 

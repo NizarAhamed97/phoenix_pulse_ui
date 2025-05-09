@@ -10,7 +10,7 @@ const StaffAttendance = () => {
   const handleCheckIn = async () => {
     if (!staffID) return;
     try {
-      await axios.post("http://localhost:5000/attendance/staff/checkin", { StaffID: staffID });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/checkin`, { StaffID: staffID });
       setStaffID("");
       fetchAttendance();
     } catch (error) {

@@ -5,7 +5,7 @@ const AllStaff = () => {
   const [staff, setStaff] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/staffs") // Adjust API URL as needed
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/staffs`) // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => setStaff(data))
       .catch((error) => console.error("Error fetching staff:", error));

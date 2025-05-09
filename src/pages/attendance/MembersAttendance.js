@@ -10,7 +10,7 @@ const MemberAttendance = () => {
   const handleCheckIn = async () => {
     if (!memberID) return;
     try {
-      await axios.post("http://localhost:5000/api/attendance/members/checkin", { FK_MemberID: memberID });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/attendance/members/checkin`, { FK_MemberID: memberID });
       setMemberID("");
       fetchAttendance();
     } catch (error) {
