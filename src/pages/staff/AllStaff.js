@@ -5,7 +5,7 @@ const AllStaff = () => {
   const [staff, setStaff] = useState([]);
 
   useEffect(() => {
-    fetch("/api/staffs") // Adjust API URL as needed
+    fetch("http://localhost:5000/api/staffs") // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => setStaff(data))
       .catch((error) => console.error("Error fetching staff:", error));
@@ -27,8 +27,8 @@ const AllStaff = () => {
         </thead>
         <tbody>
           {staff.map((person) => (
-            <tr key={person.id}>
-              <td>{person.id}</td>
+            <tr key={person.ID}>
+              <td>{person.ID}</td>
               <td>{person.Name}</td>
               <td>{person.DOB}</td>
               <td>{person.Mobile}</td>

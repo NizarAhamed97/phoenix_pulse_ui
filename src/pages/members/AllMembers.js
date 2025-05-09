@@ -5,9 +5,12 @@ const AllMembers = () => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch("/api/members") // Adjust API URL as needed
+    fetch("http://localhost:5000/api/members") // Adjust API URL as needed
       .then((response) => response.json())
-      .then((data) => setMembers(data))
+      .then((data) => {
+        setMembers(data)
+        console.log(data)
+  })
       .catch((error) => console.error("Error fetching members:", error));
   }, []);
 
@@ -26,8 +29,8 @@ const AllMembers = () => {
         </thead>
         <tbody>
           {members.map((member) => (
-            <tr key={member.id}>
-              <td>{member.id}</td>
+            <tr key={member.ID}>
+              <td>{member.ID}</td>
               <td>{member.Name}</td>
               <td>{member.DOB}</td>
               <td>{member.Mobile}</td>
