@@ -20,9 +20,8 @@ const MemberAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
-      const presentRes = await axios.get("http://localhost:5000/api/attendance/members/present");
-      console.log(presentRes)
-      const absentRes = await axios.get("http://localhost:5000/api/attendance/members/absent");
+      const presentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/members/present`);
+      const absentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/members/absent`);
 
       setPresentMembers({
         inGym: presentRes.data.filter((m) => m.CheckOut === null),
@@ -134,6 +133,7 @@ const MemberAttendance = () => {
           </Table>
         </Card.Body>
       </Card>
+      <div style={{ marginBottom: "60px" }}></div>
     </div>
   );
 };

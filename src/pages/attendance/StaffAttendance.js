@@ -20,8 +20,8 @@ const StaffAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
-      const presentRes = await axios.get("http://localhost:5000/api/attendance/staff/present");
-      const absentRes = await axios.get("http://localhost:5000/api/attendance/staff/absent");
+      const presentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/present`);
+      const absentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/absent`);
 
       setPresentStaff({
         inGym: presentRes.data.filter((s) => s.CheckOutTime === null),
@@ -133,6 +133,7 @@ const StaffAttendance = () => {
           </Table>
         </Card.Body>
       </Card>
+      <div style={{ marginBottom: "60px" }}></div>
     </div>
   );
 };

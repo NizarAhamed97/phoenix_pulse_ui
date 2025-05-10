@@ -17,40 +17,39 @@ import MembersAttendance from "./pages/attendance/MembersAttendance";
 import StaffAttendance from "./pages/attendance/StaffAttendance";
 import MemberLogin from "./pages/MemberLogin";
 import ClientLayout from "./layouts/ClientLayout";
+import EachMember from "./pages/members/EachMember";
+
 
 function AdminLayout({ children }) {
   return (
     <>
       {/* Top Logo */}
-      <Navbar style={{ backgroundColor: "#e8f5e9" }} className="px-3 py-2">
-        <Container>
-          <Navbar.Brand
-            as={Link}
-            to="/"
-            className="d-flex flex-column align-items-start"
-            style={{ padding: "4px 10px", lineHeight: "1.4", fontWeight: 500 }}
-          >
-            <span style={{ fontSize: "1.2rem", fontWeight: "600" }}>
-              Gym Management Software
-            </span>
-            <span
-              style={{
-                fontSize: "1rem",
-                fontWeight: "500",
-                color: "#2e7d32",
-                alignSelf: "center"
-              }}
-            >
-              Daily Fit
-            </span>
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
+      <Navbar style={{ backgroundColor: "#e8f5e9", padding: "12px 24px" }} expand="lg">
+  <Container fluid className="d-flex justify-content-between align-items-center">
+    
+    {/* Left - Logo block */}
+    <div className="d-flex flex-column justify-content-center" style={{ lineHeight: "1.2" }}>
+      <span style={{ fontSize: "20px", color: "#388e3c", fontWeight: 400 }}>
+        Gym Management Software
+      </span>
+      <span style={{ fontSize: "13px", color: "#1b5e20", fontWeight: "bold", textAlign: "center" }}>
+        Daily Fit
+      </span>
+    </div>
+
+    {/* Right - Login placeholder */}
+    <span style={{ fontSize: "14px", color: "#388e3c", fontWeight: 500 }}>
+      Admin
+    </span>
+
+  </Container>
+</Navbar>
+
+
 
       {/* Admin Tabs */}
-      <Navbar bg="light" expand="lg" className="px-3 border-bottom">
-        <Container className="justify-content-center">
-          <Nav className="mx-auto">
+      <Navbar bg="light" expand="lg" className="px-3 border-bottom" style={{minHeight: '56px'}}> {/* Added minHeight */}
+          <Nav className="mx-auto justify-content-center" style={{alignItems: 'center'}}> {/* Added alignItems */}
             <Nav.Link as={Link} to="/dashboard" className="px-4 fw-bold text-dark">
               Dashboard
             </Nav.Link>
@@ -100,7 +99,6 @@ function AdminLayout({ children }) {
               ↗
             </Nav.Link>
           </Nav>
-        </Container>
       </Navbar>
 
       {/* Main Content */}
@@ -127,6 +125,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/members/all" element={<AllMembers />} />
+        <Route path="/members/:id" element={<EachMember />} />
         <Route path="/staff/all" element={<AllStaff />} />
         <Route path="/members/add" element={<AddMember />} />
         <Route path="/staff/add" element={<AddStaff />} />

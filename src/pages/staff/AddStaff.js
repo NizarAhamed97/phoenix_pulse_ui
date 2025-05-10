@@ -24,7 +24,6 @@ const AddStaff = () => {
       .then((response) => response.json())
       .then((data) =>{
         alert("Staff added successfully!")
-        console.log(data)
       } )
       .catch((error) => console.error("Error adding staff:", error));
   };
@@ -54,6 +53,7 @@ const AddStaff = () => {
           <Form.Control type="text" name="Role" value={formData.Role} onChange={handleChange} required />
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">Add Staff</Button>
+        <div style={{ marginBottom: "60px" }}></div>
       </Form>
     </div>
   );

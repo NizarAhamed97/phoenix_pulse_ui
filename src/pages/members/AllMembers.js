@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const AllMembers = () => {
   const [members, setMembers] = useState([]);
@@ -9,7 +10,6 @@ const AllMembers = () => {
       .then((response) => response.json())
       .then((data) => {
         setMembers(data)
-        console.log(data)
   })
       .catch((error) => console.error("Error fetching members:", error));
   }, []);
@@ -22,19 +22,23 @@ const AllMembers = () => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>DOB</th>
-            <th>Mobile</th>
-            <th>Email</th>
+            <th>Contact No</th>
+            <th>Plan</th>
+            <th>Renewal Date</th>
           </tr>
         </thead>
         <tbody>
           {members.map((member) => (
             <tr key={member.ID}>
               <td>{member.ID}</td>
-              <td>{member.Name}</td>
-              <td>{member.DOB}</td>
-              <td>{member.Mobile}</td>
-              <td>{member.Email}</td>
+              <td>
+                <Link to={`/members/${member.ID}`} style={{ textDecoration: "none" }}>
+                {member.Name}
+                </Link>
+              </td>
+              <td>{member.ContactNo}</td>
+              <td>{member.PlanType}</td>
+              <td>{member.RenewalDate}</td>
             </tr>
           ))}
         </tbody>
