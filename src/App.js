@@ -8,7 +8,7 @@ import {
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/dashboard/Dashboard";
 import AllMembers from "./pages/members/AllMembers";
 import AddMember from "./pages/members/AddMember";
 import AllStaff from "./pages/staff/AllStaff";
