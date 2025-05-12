@@ -9,7 +9,6 @@ const ActiveVsInactive = () => {
     const fetchActivity = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/dashboard/activity`);
-        console.log(res);
         setActiveMembers(res.data.activeMembers || []);
         setInactiveMembers(res.data.inactiveMembers || []);
       } catch (error) {

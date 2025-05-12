@@ -43,7 +43,7 @@ const Membership = () => {
               expirySoon.slice(0, 7).map((membership, index) => (
                 <div key={index} className="p-2 border rounded mb-2 bg-light">
                   <div className="d-flex justify-content-between">
-                    <strong className="w-50 text-center">{membership.Name}</strong>
+                  <span className="w-50 text-center text-black fw-normal">{membership.Name}</span>
                     <span className="text-muted small w-50 text-center">
                       {membership.DaysExpired !== null ? membership.DaysToBeExpired + " days": "Coming Soon"}
                     </span>
@@ -73,7 +73,7 @@ const Membership = () => {
               overdue.slice(0, 7).map((membership, index) => (
                 <div key={index} className="p-2 border rounded mb-2 bg-light">
                   <div className="d-flex justify-content-between">
-                    <strong className="w-50 text-center">{membership.Name}</strong>
+                  <span className="w-50 text-center text-black fw-normal">{membership.Name}</span>
                     <span className="text-muted small w-50 text-center">{membership.DaysSinceExpired} days ago</span>
                   </div>
                 </div>
