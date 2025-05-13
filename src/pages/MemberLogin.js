@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './../App.css';
-
+import './../App.css'; // Assuming animations are defined here
 
 const MemberLogin = () => {
   const [input, setInput] = useState("");
@@ -30,9 +29,9 @@ const MemberLogin = () => {
       setIsError(true);
       setIsSuccess(false);
       if (err.response?.status === 403) {
-        setMessage("Already Checked In for the day, Please Check In tomorrow");
+        setMessage("Already Checked In for the day. Please Check In tomorrow.");
       } else {
-        setMessage("Invalid ID/Phone Number");
+        setMessage("Invalid ID or Phone Number.");
       }
     } finally {
       setAnimate(true);
@@ -49,30 +48,36 @@ const MemberLogin = () => {
   };
 
   return (
-    <div className="container mt-4" style={{ paddingTop: "20px" }}>
-      <h3 className="text-center mb-4">Member Login</h3>
-      <input
-        type="text"
-        placeholder="Enter ID or Mobile Number"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className={`form-control mb-3 ${isError ? "input-error shake" : ""}`}
-        style={{ height: "48px", fontSize: "1rem" }}
-      />
-      <button
-        onClick={handleLogin}
-        className="btn btn-outline-success w-100"
-        style={{ height: "45px", fontSize: "1rem" }}
-      >
-        Check In
-      </button>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+      <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
+        <h4 className="text-center mb-3 text-success">Member Check-In</h4>
 
-      {message && (
-        <div className={`mt-4 text-center ${animate && isSuccess ? "fade-success" : ""}`}>
-          <strong>{message}</strong>
-          {memberName && <div>{memberName}</div>}
-        </div>
-      )}
+        <input
+          type="text"
+          placeholder="Enter ID or Mobile Number"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className={`form-control mb-3 ${isError ? "is-invalid" : ""}`}
+          style={{ height: "48px", fontSize: "1rem" }}
+        />
+
+        <button
+          onClick={handleLogin}
+          className="btn btn-success w-100"
+          style={{ height: "45px", fontSize: "1rem" }}
+        >
+          Check In
+        </button>
+
+        {message && (
+          <div className={`mt-4 text-center ${animate && isSuccess ? "fade-success" : ""}`}>
+            <div className={`fw-semibold ${isError ? "text-danger" : "text-success"}`}>
+              {message}
+            </div>
+            {memberName && <div className="text-muted">{memberName}</div>}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

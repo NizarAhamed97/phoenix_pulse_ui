@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 
 const AddMember = () => {
   const [formData, setFormData] = useState({
@@ -9,14 +10,16 @@ const AddMember = () => {
     Email: "",
     PersonalTrainer: false,
     TrainerID: "",
-    PlanType: "",
+    PlanName: "",
     PlanDurationMonths: "0",
     PlanDurationYears: "0",
+    PlanAmount: "",
+    AmountPaid: "",
     AddedBy: ""
   });
 
   const [trainers, setTrainers] = useState([]);
-  const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -43,7 +46,7 @@ const AddMember = () => {
 
     try {
       await axios.post(`${process.env.REACT_APP_API_BASE_URL}/members`, payload);
-      setMessage("Member added successfully!");
+      setShowModal(true);
 
       // Reset form
       setFormData({
@@ -53,17 +56,17 @@ const AddMember = () => {
         Email: "",
         PersonalTrainer: false,
         TrainerID: "",
-        PlanType: "",
+        PlanName: "",
         PlanDurationMonths: "0",
         PlanDurationYears: "0",
+        PlanAmount: "",
+        AmountPaid: "",
         AddedBy: ""
       });
     } catch (err) {
       console.error(err);
-      setMessage("Error adding member.");
+      alert("Error adding member.");
     }
-
-    setTimeout(() => setMessage(""), 3000);
   };
 
   return (
@@ -72,61 +75,26 @@ const AddMember = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label>Name</label>
-          <input
-            type="text"
-            name="Name"
-            value={formData.Name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input type="text" name="Name" value={formData.Name} onChange={handleChange} className="form-control" required />
         </div>
 
         <div className="mb-3">
           <label>Date of Birth</label>
-          <input
-            type="date"
-            name="DOB"
-            value={formData.DOB}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input type="date" name="DOB" value={formData.DOB} onChange={handleChange} className="form-control" required />
         </div>
 
         <div className="mb-3">
           <label>Contact Number</label>
-          <input
-            type="text"
-            name="ContactNo"
-            value={formData.ContactNo}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input type="text" name="ContactNo" value={formData.ContactNo} onChange={handleChange} className="form-control" required />
         </div>
 
         <div className="mb-3">
           <label>Email</label>
-          <input
-            type="email"
-            name="Email"
-            value={formData.Email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input type="email" name="Email" value={formData.Email} onChange={handleChange} className="form-control" required />
         </div>
 
         <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="PersonalTrainer"
-            checked={formData.PersonalTrainer}
-            onChange={handleChange}
-            id="personalTrainerCheck"
-          />
+          <input className="form-check-input" type="checkbox" name="PersonalTrainer" checked={formData.PersonalTrainer} onChange={handleChange} id="personalTrainerCheck" />
           <label className="form-check-label" htmlFor="personalTrainerCheck">
             Personal Trainer
           </label>
@@ -134,79 +102,58 @@ const AddMember = () => {
 
         <div className="mb-3">
           <label>Trainer</label>
-          <select
-            name="TrainerID"
-            value={formData.TrainerID}
-            onChange={handleChange}
-            className="form-control"
-            required
-          >
+          <select name="TrainerID" value={formData.TrainerID} onChange={handleChange} className="form-control" required>
             <option value="">-- Select Trainer --</option>
             {trainers.map((trainer) => (
-              <option key={trainer.ID} value={trainer.ID}>
-                {trainer.Name}
-              </option>
+              <option key={trainer.ID} value={trainer.ID}>{trainer.Name}</option>
             ))}
           </select>
         </div>
 
         <div className="mb-3">
-          <label>Plan Type</label>
-          <input
-            type="text"
-            name="PlanType"
-            value={formData.PlanType}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <label>Plan Name</label>
+          <input type="text" name="PlanName" value={formData.PlanName} onChange={handleChange} className="form-control" required />
         </div>
 
         <div className="mb-3 d-flex gap-3">
           <div>
             <label>Duration (Years)</label>
-            <input
-              type="number"
-              name="PlanDurationYears"
-              value={formData.PlanDurationYears}
-              onChange={handleChange}
-              className="form-control"
-              min="0"
-              style={{ width: "150px" }}
-            />
+            <input type="number" name="PlanDurationYears" value={formData.PlanDurationYears} onChange={handleChange} className="form-control" min="0" style={{ width: "150px" }} />
           </div>
           <div>
             <label>Duration (Months)</label>
-            <input
-              type="number"
-              name="PlanDurationMonths"
-              value={formData.PlanDurationMonths}
-              onChange={handleChange}
-              className="form-control"
-              min="0"
-              max="11"
-              style={{ width: "150px" }}
-            />
+            <input type="number" name="PlanDurationMonths" value={formData.PlanDurationMonths} onChange={handleChange} className="form-control" min="0" max="11" style={{ width: "150px" }} />
           </div>
+        </div>
+
+        <div className="mb-3">
+          <label>₹ Plan Amount</label>
+          <input type="number" name="PlanAmount" value={formData.PlanAmount} onChange={handleChange} className="form-control" min="0" />
+        </div>
+
+        <div className="mb-3">
+          <label>₹ Amount Paid</label>
+          <input type="number" name="AmountPaid" value={formData.AmountPaid} onChange={handleChange} className="form-control" min="0" />
         </div>
 
         <div className="mb-4">
           <label>Added By</label>
-          <input
-            type="text"
-            name="AddedBy"
-            value={formData.AddedBy}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+          <input type="text" name="AddedBy" value={formData.AddedBy} onChange={handleChange} className="form-control" required />
         </div>
 
         <button type="submit" className="btn btn-outline-success">Add Member</button>
         <div style={{ marginBottom: "60px" }}></div>
       </form>
 
-      {message && <div className="mt-3 alert alert-info">{message}</div>}
+      {/* Modal for success message */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Body className="text-center">
+          <h5 className="text-success">✅ Member Added Successfully</h5>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={() => setShowModal(false)}>OK</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

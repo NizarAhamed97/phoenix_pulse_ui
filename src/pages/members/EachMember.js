@@ -22,7 +22,11 @@ const EachMember = () => {
       <p><strong>DOB:</strong> {member.DOB}</p>
       <p><strong>Contact:</strong> {member.ContactNo}</p>
       <p><strong>Email:</strong> {member.Email}</p>
-      <p><strong>Membership Expires:</strong> {member.RenewalDate}</p>
+      <p><strong>Plan Name:</strong> {member.PlanName}</p>
+      <p><strong>Plan Amount:</strong> {member.PlanAmount}</p>
+      <p><strong>Amount Paid:</strong> {member.AmountPaid}</p>
+      <p><strong>Pending:</strong> {member.Pending}</p>
+      <p><strong>Membership Expires:</strong> {member.PlanExpiry}</p>
       <p><strong>Member Added By:</strong> {member.AddedBy}</p>
       {/* Add more fields as needed */}
     </div>

@@ -6,25 +6,23 @@ const AllMembers = () => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/members`) // Adjust API URL as needed
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/members`)
       .then((response) => response.json())
-      .then((data) => {
-        setMembers(data)
-  })
+      .then((data) => setMembers(data))
       .catch((error) => console.error("Error fetching members:", error));
   }, []);
 
   return (
     <div>
       <h2>All Members</h2>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Contact No</th>
-            <th>Plan</th>
-            <th>Renewal Date</th>
+            <th>Plan Name</th>
+            <th>Plan Expiry</th>
+            <th>Pending Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -33,12 +31,12 @@ const AllMembers = () => {
               <td>{member.ID}</td>
               <td>
                 <Link to={`/members/${member.ID}`} style={{ textDecoration: "none" }}>
-                {member.Name}
+                  {member.Name}
                 </Link>
               </td>
-              <td>{member.ContactNo}</td>
-              <td>{member.PlanType}</td>
-              <td>{member.RenewalDate}</td>
+              <td>{member.PlanName}</td>
+              <td>{member.PlanExpiry}</td>
+              <td>₹{member.Pending}</td>
             </tr>
           ))}
         </tbody>
