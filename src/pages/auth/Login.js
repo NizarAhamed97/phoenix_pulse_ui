@@ -10,25 +10,32 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      console.log("Attempting login for:", username);
+
       const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, {
         username,
         password,
       });
 
       const token = res.data.token;
+      console.log(token)
+      if (!token) throw new Error("No token received from server");
 
-      // Decode JWT payload to get expiry time
+      // Decode token
       const payload = JSON.parse(atob(token.split(".")[1]));
-      const expiryTime = payload.exp * 1000; // convert to milliseconds
+      const expiryTime = payload.exp * 1000; // convert to ms
+      console.log(payload)
+      const user = payload.username;
 
-      // Save token and expiry to localStorage
+      // Save to localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("token_expiry", expiryTime.toString());
-      localStorage.setItem("username", username);
+      localStorage.setItem("username", user);
 
-      // Redirect to dashboard
+      console.log("Login successful. Redirecting...");
       navigate("/dashboard");
     } catch (err) {
+      console.error("Login failed:", err.response?.data || err.message);
       setError("Invalid username or password. Please try again.");
     }
   };
@@ -36,6 +43,7 @@ const Login = () => {
   return (
     <div className="container mt-5" style={{ maxWidth: "400px" }}>
       <h3 className="text-center mb-4">Admin Login</h3>
+
       {error && <div className="alert alert-danger">{error}</div>}
 
       <input
@@ -44,6 +52,7 @@ const Login = () => {
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        style={{ height: "45px" }}
       />
 
       <input
@@ -52,9 +61,10 @@ const Login = () => {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        style={{ height: "45px" }}
       />
 
-      <button className="btn btn-success w-100" onClick={handleLogin}>
+      <button className="btn btn-success w-100" onClick={handleLogin} style={{ height: "45px" }}>
         Login
       </button>
     </div>

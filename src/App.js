@@ -22,9 +22,7 @@ import StaffAttendance from "./pages/attendance/StaffAttendance";
 import MemberLogin from "./pages/MemberLogin";
 import Login from "./pages/auth/Login";
 
-
-
-// Utils & Auth
+// Auth utils
 import { isAuthenticated } from "./utils/auth";
 
 // Protected Route
@@ -41,7 +39,7 @@ function AdminLayout({ children, hideNavTabs = false }) {
       {/* Top Logo Bar */}
       <Navbar style={{ backgroundColor: "#e8f5e9", padding: "12px 24px" }} expand="lg">
         <Container fluid className="d-flex justify-content-between align-items-center">
-          {/* Left - Logo block */}
+          {/* Left - Logo */}
           <div className="d-flex flex-column justify-content-center" style={{ lineHeight: "1.2" }}>
             <span style={{ fontSize: "20px", color: "#388e3c", fontWeight: 400 }}>
               Gym Management Software
@@ -51,7 +49,7 @@ function AdminLayout({ children, hideNavTabs = false }) {
             </span>
           </div>
 
-          {/* Right - Username + Logout */}
+          {/* Right - User info + Logout */}
           <div className="d-flex align-items-center gap-3">
             <span style={{ fontSize: "14px", color: "#388e3c", fontWeight: 500 }}>
               {username || "Admin"}
@@ -71,7 +69,7 @@ function AdminLayout({ children, hideNavTabs = false }) {
         </Container>
       </Navbar>
 
-      {/* Admin Tabs - only if not hidden */}
+      {/* Nav Tabs */}
       {!hideNavTabs && (
         <Navbar bg="light" expand="lg" className="px-3 border-bottom" style={{ minHeight: "56px" }}>
           <Nav className="mx-auto justify-content-center" style={{ alignItems: "center" }}>
@@ -103,14 +101,13 @@ function AdminLayout({ children, hideNavTabs = false }) {
         </Navbar>
       )}
 
-      {/* Main Content */}
+      {/* Page Content */}
       <div className="container mt-4">{children}</div>
     </>
   );
 }
 
-
-// App Routes
+// Routes
 function AppRoutes() {
   const location = useLocation();
 
@@ -142,7 +139,6 @@ function AppRoutes() {
     </AdminLayout>
   );
 }
-
 
 // Main App
 function App() {
