@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import LoadingBlock from "../../components/LoadingBlock";
 
 const EachMember = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const EachMember = () => {
       .catch(err => console.error("Failed to fetch member", err));
   }, [id]);
 
-  if (!member) return <div>Loading...</div>;
+  if (!member) return <LoadingBlock message="Loading member details..." />;
 
   return (
     <div className="container mt-4">
@@ -28,7 +29,6 @@ const EachMember = () => {
       <p><strong>Pending:</strong> {member.Pending}</p>
       <p><strong>Membership Expires:</strong> {member.PlanExpiry}</p>
       <p><strong>Member Added By:</strong> {member.AddedBy}</p>
-      {/* Add more fields as needed */}
     </div>
   );
 };

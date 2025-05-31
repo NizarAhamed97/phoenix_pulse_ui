@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Table, Row, Col, Card } from "react-bootstrap";
+import LoadingBlock from "../../components/LoadingBlock";
 
 const StaffAttendance = () => {
   const [staffID, setStaffID] = useState("");
   const [presentStaff, setPresentStaff] = useState({ inGym: [], checkedOut: [] });
   const [absentStaff, setAbsentStaff] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleCheckIn = async () => {
-    if (!staffID) return;
+    if (!staffID.trim()) return;
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/checkin`, { StaffID: staffID });
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/checkin`, {
+        StaffID: staffID
+      });
       setStaffID("");
       fetchAttendance();
     } catch (error) {
@@ -20,6 +24,7 @@ const StaffAttendance = () => {
 
   const fetchAttendance = async () => {
     try {
+      setLoading(true);
       const presentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/present`);
       const absentRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/attendance/staff/absent`);
 
@@ -30,6 +35,8 @@ const StaffAttendance = () => {
       setAbsentStaff(absentRes.data);
     } catch (error) {
       console.error("Failed to fetch staff attendance:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,7 +46,6 @@ const StaffAttendance = () => {
 
   return (
     <div>
-      {/* Section 1: Check-In Form */}
       <Card className="mb-4">
         <Card.Header>Check In</Card.Header>
         <Card.Body>
@@ -63,76 +69,80 @@ const StaffAttendance = () => {
         </Card.Body>
       </Card>
 
-      {/* Section 2: Present Staff */}
-      <Card className="mb-4">
-        <Card.Header>Present Staff</Card.Header>
-        <Card.Body>
-          <h6>Currently In Gym</h6>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Check-In Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {presentStaff.inGym.map((staff) => (
-                <tr key={staff.ID}>
-                  <td>{staff.ID}</td>
-                  <td>{staff.Name}</td>
-                  <td>{staff.CheckInTime}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+      {loading ? (
+        <LoadingBlock message="Loading attendance data..." />
+      ) : (
+        <>
+          <Card className="mb-4">
+            <Card.Header>Present Staff</Card.Header>
+            <Card.Body>
+              <h6>Currently In Gym</h6>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Check-In Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {presentStaff.inGym.map((staff) => (
+                    <tr key={staff.ID}>
+                      <td>{staff.ID}</td>
+                      <td>{staff.Name}</td>
+                      <td>{staff.CheckInTime}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
 
-          <h6 className="mt-4">Checked Out</h6>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Check-In Time</th>
-                <th>Check-Out Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {presentStaff.checkedOut.map((staff) => (
-                <tr key={staff.ID}>
-                  <td>{staff.ID}</td>
-                  <td>{staff.Name}</td>
-                  <td>{staff.CheckInTime}</td>
-                  <td>{staff.CheckOutTime}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Card.Body>
-      </Card>
+              <h6 className="mt-4">Checked Out</h6>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Check-In Time</th>
+                    <th>Check-Out Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {presentStaff.checkedOut.map((staff) => (
+                    <tr key={staff.ID}>
+                      <td>{staff.ID}</td>
+                      <td>{staff.Name}</td>
+                      <td>{staff.CheckInTime}</td>
+                      <td>{staff.CheckOutTime}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+          </Card>
 
-      {/* Section 3: Absent Staff */}
-      <Card>
-        <Card.Header>Absent Staff</Card.Header>
-        <Card.Body>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {absentStaff.map((staff) => (
-                <tr key={staff.ID}>
-                  <td>{staff.ID}</td>
-                  <td>{staff.Name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Card.Body>
-      </Card>
+          <Card>
+            <Card.Header>Absent Staff</Card.Header>
+            <Card.Body>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {absentStaff.map((staff) => (
+                    <tr key={staff.ID}>
+                      <td>{staff.ID}</td>
+                      <td>{staff.Name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
+          </Card>
+        </>
+      )}
       <div style={{ marginBottom: "60px" }}></div>
     </div>
   );

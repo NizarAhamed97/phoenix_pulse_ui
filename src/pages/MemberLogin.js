@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './../App.css'; // Assuming animations are defined here
+import { Modal } from "react-bootstrap";
+import "./../App.css"; // Assuming styles like 'is-invalid' are still used
 
 const MemberLogin = () => {
   const [input, setInput] = useState("");
-  const [message, setMessage] = useState("");
-  const [memberName, setMemberName] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [animate, setAnimate] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -17,33 +16,35 @@ const MemberLogin = () => {
       });
 
       setIsError(false);
-      setIsSuccess(true);
 
       if (res.status === 200) {
-        setMessage("Successfully Logged Out");
+        setPopupMessage("Thank you!! for Log Out");
       } else if (res.status === 201) {
-        setMessage("Successfully Logged In");
-        setMemberName(res.data?.Name || "");
+        setPopupMessage("Thank you!! for Log In");
+      } else {
+        setPopupMessage("Logged in");
       }
+
+      setShowModal(true);
     } catch (err) {
       setIsError(true);
-      setIsSuccess(false);
+
       if (err.response?.status === 403) {
-        setMessage("Already Checked In for the day. Please Check In tomorrow.");
+        setPopupMessage("Already Checked In for the day. Please Check In tomorrow.");
       } else {
-        setMessage("Invalid ID or Phone Number.");
+        setPopupMessage("Invalid ID or Phone Number.");
       }
+
+      setShowModal(true);
     } finally {
-      setAnimate(true);
       setInput("");
 
+      // Auto-close modal after 3 seconds
       setTimeout(() => {
-        setMessage("");
-        setMemberName("");
-        setAnimate(false);
+        setShowModal(false);
+        setPopupMessage("");
         setIsError(false);
-        setIsSuccess(false);
-      }, 3000);
+      }, 2000);
     }
   };
 
@@ -68,16 +69,21 @@ const MemberLogin = () => {
         >
           Check In
         </button>
-
-        {message && (
-          <div className={`mt-4 text-center ${animate && isSuccess ? "fade-success" : ""}`}>
-            <div className={`fw-semibold ${isError ? "text-danger" : "text-success"}`}>
-              {message}
-            </div>
-            {memberName && <div className="text-muted">{memberName}</div>}
-          </div>
-        )}
       </div>
+
+      {/* Centered Modal */}
+      <Modal
+        show={showModal}
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setShowModal(false)}
+        contentClassName="text-center"
+      >
+        <Modal.Body>
+          <h5 className={isError ? "text-danger" : "text-success"}>{popupMessage}</h5>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
