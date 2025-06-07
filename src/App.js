@@ -32,22 +32,26 @@ const ProtectedRoute = ({ children }) => {
 
 // Admin Layout
 function AdminLayout({ children, hideNavTabs = false }) {
-  const username = localStorage.getItem("username");
+  const username = localStorage.getItem("gymName");
 
   return (
     <>
       {/* Top Logo Bar */}
       <Navbar style={{ backgroundColor: "#e8f5e9", padding: "12px 24px" }} expand="lg">
         <Container fluid className="d-flex justify-content-between align-items-center">
-          {/* Left - Logo */}
-          <div className="d-flex flex-column justify-content-center" style={{ lineHeight: "1.2" }}>
-            <span style={{ fontSize: "20px", color: "#388e3c", fontWeight: 400 }}>
-              Gym Management Software
-            </span>
-            <span style={{ fontSize: "13px", color: "#1b5e20", fontWeight: "bold", textAlign: "center" }}>
-              Daily Fit
-            </span>
+          {/* Left - Logo and Title */}
+          <div className="d-flex align-items-center" style={{ gap: "12px" }}>
+            <img src="/logo.jpeg" alt="Logo" style={{ height: "50px", width: "50px", borderRadius: "8px" }} />
+            <div className="d-flex flex-column justify-content-center" style={{ lineHeight: "1.2" }}>
+              <span style={{ fontSize: "20px", color: "#388e3c", fontWeight: 400 }}>
+                Gym Management Software
+              </span>
+              <span style={{ fontSize: "13px", color: "#1b5e20", fontWeight: "bold", textAlign: "center" }}>
+                Daily Fit
+              </span>
+            </div>
           </div>
+
 
           {/* Right - User info + Logout */}
           <div className="d-flex align-items-center gap-3">

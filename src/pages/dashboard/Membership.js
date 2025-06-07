@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingBlock from "../../components/LoadingBlock";
+import { Link } from "react-router-dom";
 
 const Membership = () => {
   const [expirySoon, setExpirySoon] = useState([]);
@@ -47,7 +48,15 @@ const Membership = () => {
                 {expirySoon.slice(0, 7).map((membership, index) => (
                   <div key={index} className="p-2 border rounded mb-2 bg-light">
                     <div className="d-flex justify-content-between">
-                      <span className="w-50 text-center text-black fw-normal">{membership.Name}</span>
+                      <span className="w-50 text-center fw-normal">
+                        <Link
+                        to={`/members/${membership.ID}`}
+                        className="text-primary text-decoration-underline"
+                        style={{ textAlign: "center", display: "inline-block", width: "100%" }}
+                      >
+                        {membership.Name}
+                      </Link>
+                      </span>
                       <span className="text-muted small w-50 text-center">
                         {membership.DaysExpired !== null
                           ? `${membership.DaysToBeExpired} days`
@@ -78,7 +87,16 @@ const Membership = () => {
                 {overdue.slice(0, 7).map((membership, index) => (
                   <div key={index} className="p-2 border rounded mb-2 bg-light">
                     <div className="d-flex justify-content-between">
-                      <span className="w-50 text-center text-black fw-normal">{membership.Name}</span>
+                    <span className="w-50 text-center fw-normal">
+                    <Link
+                      to={`/members/${membership.ID}`}
+                      className="text-primary text-decoration-underline"
+                      style={{ textAlign: "center", display: "inline-block", width: "100%" }}
+                    >
+                      {membership.Name}
+                    </Link>
+                  </span>
+
                       <span className="text-muted small w-50 text-center">
                         {membership.DaysSinceExpired} days ago
                       </span>

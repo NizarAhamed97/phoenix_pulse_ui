@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 
 const ClientLayout = ({ children }) => {
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f5fdf5", padding: "20px" }}>
       {/* Top Bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        {/* Logo Text */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Logo + Title */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img src="/logo.jpeg" alt="Logo" style={{ height: "50px", width: "50px" }} />
         <div>
           <div style={{ fontSize: "1.6rem", fontWeight: "bold", color: "#222" }}>
             Gym Management Software
@@ -14,6 +16,7 @@ const ClientLayout = ({ children }) => {
           <div style={{ fontSize: "1.1rem", color: "#2e7d32", fontWeight: "500" }}>
             Daily Fit
           </div>
+        </div>
         </div>
 
         {/* Top Right Text */}

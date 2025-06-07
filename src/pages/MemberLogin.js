@@ -51,6 +51,11 @@ const MemberLogin = () => {
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
       <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
+        <img
+          src="/logo.jpeg"
+          alt="Daily Fit Logo"
+          style={{ height: "60px", width: "60px", display: "block", margin: "0 auto 10px" }}
+        />
         <h4 className="text-center mb-3 text-success">Member Check-In</h4>
 
         <input
